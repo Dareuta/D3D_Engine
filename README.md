@@ -1,13 +1,13 @@
 # D3D_Engine
 
-add: 추가됨
-remove: 삭제됨
-refactor: 구조 변경, 리팩터링
-fix: 버그 수정
-rename: 이름 변경
-docs: 주석, README, 문서 수정
-test: 테스트 코드 추가/수정
-chore: 기타 잡다한 일들...
+#### add: 추가됨</br>
+#### remove: 삭제됨</br>
+#### refactor: 구조 변경, 리팩터링</br>
+#### fix: 버그 수정</br>
+#### rename: 이름 변경</br>
+#### docs: 주석, README, 문서 수정</br>
+#### test: 테스트 코드 추가/수정</br>
+#### chore: 기타 잡다한 일들...</br>
 
 ```
 소갈비찜 레시피
