@@ -4,13 +4,13 @@
 
 #include "SkinnedSkeletal.h"
 #include "AssimpImporterEX.h"
+#include "RenderSharedCB.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 static inline double fmod_pos(double x, double m) {
 	if (m <= 0.0) return 0.0;
@@ -392,18 +392,7 @@ void SkinnedSkeletal::WarmupBoneCB(ID3D11DeviceContext* ctx, ID3D11Buffer* boneC
 	UpdateBonePalette(ctx, boneCB, Matrix::Identity);
 }
 
-
-// ===== 렌더 헬퍼 (CB 채우기 & UseCB) =====
-struct ConstantBuffer_RS {
-	Matrix mWorld;
-	Matrix mView;
-	Matrix mProjection;
-	Matrix mWorldInvTranspose;
-	Vector4 vLightDir;
-	Vector4 vLightColor;
-};
-
-static void FillCB(ConstantBuffer_RS& cb,
+static void FillCB(ConstantBuffer& cb,
 	const Matrix& world, const Matrix& view, const Matrix& proj,
 	const Vector4& vLightDir, const Vector4& vLightColor)
 {
@@ -420,11 +409,7 @@ static void PushUseCB(ID3D11DeviceContext* ctx, ID3D11Buffer* useCB,
 	bool useOpacity, float alphaCut,
 	bool disableNormal, bool disableSpecular, bool disableEmissive)
 {
-	struct UseCB_ {
-		UINT  useDiffuse, useNormal, useSpecular, useEmissive;
-		UINT  useOpacity; float alphaCut; float pad[2];
-	} use{};
-
+	UseCB use{};
 	use.useDiffuse = mat.hasDiffuse ? 1u : 0u;
 	use.useNormal = (mat.hasNormal && !disableNormal) ? 1u : 0u;
 	use.useSpecular = (!disableSpecular) ? (mat.hasSpecular ? 1u : 2u) : 0u; // 2: fake/spec const
@@ -457,7 +442,7 @@ void SkinnedSkeletal::DrawOpaqueOnly(
 
 			const Matrix world = mNodes[part.ownerNode].poseGlobal * worldModel;
 
-			ConstantBuffer_RS cb{};
+			ConstantBuffer cb{};
 			FillCB(cb, world, view, proj, vLightDir, vLightColor);
 			ctx->UpdateSubresource(cb0, 0, nullptr, &cb, 0, 0);
 			ctx->VSSetConstantBuffers(0, 1, &cb0);
@@ -492,7 +477,7 @@ void SkinnedSkeletal::DrawAlphaCutOnly(
 
 			const Matrix world = mNodes[part.ownerNode].poseGlobal * worldModel;
 
-			ConstantBuffer_RS cb{};
+			ConstantBuffer cb{};
 			FillCB(cb, world, view, proj, vLightDir, vLightColor);
 			ctx->UpdateSubresource(cb0, 0, nullptr, &cb, 0, 0);
 			ctx->VSSetConstantBuffers(0, 1, &cb0);
@@ -528,7 +513,7 @@ void SkinnedSkeletal::DrawTransparentOnly(
 
 			const Matrix world = mNodes[part.ownerNode].poseGlobal * worldModel;
 
-			ConstantBuffer_RS cb{};
+			ConstantBuffer cb{};
 			FillCB(cb, world, view, proj, vLightDir, vLightColor);
 			ctx->UpdateSubresource(cb0, 0, nullptr, &cb, 0, 0);
 			ctx->VSSetConstantBuffers(0, 1, &cb0);
@@ -554,11 +539,6 @@ void SkinnedSkeletal::DrawDepthOnly(
 	ID3D11InputLayout* ilPNTT_BW,
 	float alphaCut)
 {
-	struct ConstantBuffer_RS {
-		Matrix mWorld, mView, mProjection, mWorldInvTranspose;
-		Vector4 vLightDir, vLightColor;
-	};
-
 	// 본 팔레트(b4) 업데이트
 	UpdateBonePalette(ctx, boneCB, worldModel);
 
@@ -571,7 +551,7 @@ void SkinnedSkeletal::DrawDepthOnly(
 		const auto& ranges = part.mesh.Ranges();
 		const Matrix world = mNodes[part.ownerNode].poseGlobal * worldModel;
 
-		ConstantBuffer_RS cb{};
+		ConstantBuffer cb{};
 		cb.mWorld = XMMatrixTranspose(world);
 		cb.mView = XMMatrixTranspose(lightView);
 		cb.mProjection = XMMatrixTranspose(lightProj);
@@ -583,10 +563,7 @@ void SkinnedSkeletal::DrawDepthOnly(
 			const auto& r = ranges[i];
 			const auto& mat = part.materials[r.materialIndex];
 
-			struct UseCB_ {
-				UINT useDiffuse, useNormal, useSpecular, useEmissive;
-				UINT useOpacity; float alphaCut; float pad[2];
-			} use{};
+			UseCB use{};
 			use.useOpacity = mat.hasOpacity ? 1u : 0u;
 			use.alphaCut = alphaCut;
 

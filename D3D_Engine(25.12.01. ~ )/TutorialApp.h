@@ -14,6 +14,8 @@
 #include <d3d11.h>
 #include <d3dcompiler.h>
 
+#include "RenderSharedCB.h" 
+
 #include <directxtk/SimpleMath.h>
 #include <DirectXTK/DDSTextureLoader.h>   // CreateDDSTextureFromFile
 #include <DirectXTK/WICTextureLoader.h>
@@ -33,41 +35,6 @@
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
-
-//==============================================================================================
-// 상수 버퍼 구조체 (CPU → GPU 전달용, HLSL ConstantBuffer와 1:1 매칭)
-//==============================================================================================
-struct ConstantBuffer
-{
-	Matrix mWorld;
-	Matrix mView;
-	Matrix mProjection;
-	Matrix mWorldInvTranspose;
-
-	Vector4 vLightDir;
-	Vector4 vLightColor;
-};
-
-struct BlinnPhongCB
-{
-	Vector4 EyePosW;    // (ex, ey, ez, 1)
-	Vector4 kA;         // (ka.r, ka.g, ka.b, 0)
-	Vector4 kSAlpha;    // (ks, alpha, 0, 0)
-	Vector4 I_ambient;  // (Ia.r, Ia.g, Ia.b, 0)
-};
-
-struct UseCB
-{
-	UINT  useDiffuse;
-	UINT  useNormal;
-	UINT  useSpecular;
-	UINT  useEmissive;
-
-	UINT  useOpacity;
-	float alphaCut;
-	float pad[2];
-};
-
 
 //================================================================================================
 // TutorialApp
@@ -450,16 +417,4 @@ private:
 	//==========================================================================================
 	ID3D11ShaderResourceView* m_pRampSRV = nullptr; // PS t6
 	ID3D11Buffer* m_pToonCB = nullptr; // PS b7
-
-	struct ToonCB_
-	{
-		UINT  useToon;
-		UINT  halfLambert;
-		float specStep;
-		float specBoost;
-		float shadowMin;
-		float pad0;
-		float pad1;
-		float pad2; // 16B 정렬
-	};
 };

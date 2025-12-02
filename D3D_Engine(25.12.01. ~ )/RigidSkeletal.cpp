@@ -4,6 +4,7 @@
 
 #include "RigidSkeletal.h"
 #include "AssimpImporterEX.h"
+#include "RenderSharedCB.h"
 #include <assimp/Importer.hpp>
 
 
@@ -335,20 +336,10 @@ void RigidSkeletal::EvaluatePose(double tSec, bool loop)
 void RigidSkeletal::EvaluatePose(double tSec) {
 	EvaluatePose(tSec, /*loop*/true);
 }
-// ===== 공통 CB 구조체(튜토리얼 앱과 동일 레이아웃) =====
-struct ConstantBuffer_RS {
-	Matrix mWorld;
-	Matrix mView;
-	Matrix mProjection;
-	Matrix mWorldInvTranspose;
-	Vector4 vLightDir;
-	Vector4 vLightColor;
-};
 
-// UseCB는 TutorialApp의 UseCB 레이아웃을 그대로 씀. (b2)
-// struct UseCB { ... } — 이미 프로젝트에 존재
 
-static void FillCB(ConstantBuffer_RS& cb,
+
+static void FillCB(ConstantBuffer& cb,
 	const Matrix& world,
 	const Matrix& view, const Matrix& proj,
 	const Vector4& vLightDir, const Vector4& vLightColor)
@@ -366,11 +357,7 @@ static void PushUseCB(ID3D11DeviceContext* ctx, ID3D11Buffer* useCB,
 	bool useOpacity, float alphaCut,
 	bool disableNormal, bool disableSpecular, bool disableEmissive)
 {
-	struct UseCB_ {
-		UINT  useDiffuse, useNormal, useSpecular, useEmissive;
-		UINT  useOpacity; float alphaCut; float pad[2];
-	} use{};
-
+	UseCB use{};
 	use.useDiffuse = mat.hasDiffuse ? 1u : 0u;
 	use.useNormal = (mat.hasNormal && !disableNormal) ? 1u : 0u;
 	use.useSpecular = (!disableSpecular) ? (mat.hasSpecular ? 1u : 2u) : 0u; // 2: fake/spec const
@@ -403,7 +390,7 @@ void RigidSkeletal::DrawOpaqueOnly(
 
 			const Matrix world = mNodes[part.ownerNode].poseGlobal * worldModel;
 
-			ConstantBuffer_RS cb{};
+			ConstantBuffer cb{};
 			FillCB(cb, world, /*view*/view, /*proj*/proj, vLightDir, vLightColor);
 			ctx->UpdateSubresource(cb0, 0, nullptr, &cb, 0, 0);
 			ctx->VSSetConstantBuffers(0, 1, &cb0);
@@ -440,7 +427,7 @@ void RigidSkeletal::DrawAlphaCutOnly(
 
 			const Matrix world = mNodes[part.ownerNode].poseGlobal * worldModel;
 
-			ConstantBuffer_RS cb{};
+			ConstantBuffer cb{};
 			FillCB(cb, world, view, proj, vLightDir, vLightColor);
 			ctx->UpdateSubresource(cb0, 0, nullptr, &cb, 0, 0);
 			ctx->VSSetConstantBuffers(0, 1, &cb0);
@@ -478,7 +465,7 @@ void RigidSkeletal::DrawTransparentOnly(
 
 			const Matrix world = mNodes[part.ownerNode].poseGlobal * worldModel;
 
-			ConstantBuffer_RS cb{};
+			ConstantBuffer cb{};
 			FillCB(cb, world, view, proj, vLightDir, vLightColor);
 			ctx->UpdateSubresource(cb0, 0, nullptr, &cb, 0, 0);
 			ctx->VSSetConstantBuffers(0, 1, &cb0);
@@ -503,11 +490,6 @@ void RigidSkeletal::DrawDepthOnly(
 	ID3D11InputLayout* ilPNTT,
 	float alphaCut)
 {
-	// 공용 CB 구조 그대로 재사용
-	struct ConstantBuffer_RS {
-		Matrix mWorld, mView, mProjection, mWorldInvTranspose;
-		Vector4 vLightDir, vLightColor;
-	};
 
 	ctx->IASetInputLayout(ilPNTT);
 	ctx->VSSetShader(vsDepth, nullptr, 0);
@@ -518,7 +500,7 @@ void RigidSkeletal::DrawDepthOnly(
 		const auto& ranges = part.mesh.Ranges();
 		const Matrix world = mNodes[part.ownerNode].poseGlobal * worldModel;
 
-		ConstantBuffer_RS cb{};
+		ConstantBuffer cb{};
 		cb.mWorld = XMMatrixTranspose(world);
 		cb.mView = XMMatrixTranspose(lightView);
 		cb.mProjection = XMMatrixTranspose(lightProj);
@@ -531,10 +513,7 @@ void RigidSkeletal::DrawDepthOnly(
 			const auto& mat = part.materials[r.materialIndex];
 
 			// UseCB: alpha cut만 사용 (PS에서 clip)
-			struct UseCB_ {
-				UINT useDiffuse, useNormal, useSpecular, useEmissive;
-				UINT useOpacity; float alphaCut; float pad[2];
-			} use{};
+			UseCB use{};
 			use.useOpacity = mat.hasOpacity ? 1u : 0u;
 			use.alphaCut = alphaCut;
 

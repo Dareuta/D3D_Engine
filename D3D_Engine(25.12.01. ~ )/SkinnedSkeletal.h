@@ -1,4 +1,3 @@
-#pragma once
 // SkinnedSkeletal.h (½Å±Ô)
 #pragma once
 #include <string>
@@ -55,8 +54,11 @@ struct SK_Part {
 
 class SkinnedSkeletal {
 public:
-
-    DirectX::SimpleMath::Matrix mGlobalInv = DirectX::SimpleMath::Matrix::Identity;
+	using Matrix = DirectX::SimpleMath::Matrix;
+	using Vector3 = DirectX::SimpleMath::Vector3;
+	using Quaternion = DirectX::SimpleMath::Quaternion;
+        
+    const Matrix& GlobalInverse() const { return mGlobalInv; }
 
     static std::unique_ptr<SkinnedSkeletal> LoadFromFBX(
         ID3D11Device* dev,
@@ -111,6 +113,8 @@ public:
             : (mClip.duration / 25.0);
     }
 private:
+
+    DirectX::SimpleMath::Matrix mGlobalInv = DirectX::SimpleMath::Matrix::Identity;
     SkinnedSkeletal() = default;
     static int UB_T(double t, const std::vector<SK_KeyT>& v);
     static int UB_R(double t, const std::vector<SK_KeyR>& v);

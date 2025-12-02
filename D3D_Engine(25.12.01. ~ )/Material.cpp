@@ -24,6 +24,7 @@ static HRESULT LoadTex2D(ID3D11Device* dev, const std::wstring& path, ID3D11Shad
 
 void MaterialGPU::Build(ID3D11Device* dev, const MaterialCPU& cpu, const std::wstring& texRoot)
 {
+    ReleaseAll();
     auto join = [&](const std::wstring& f)->std::wstring { return texRoot + f; };
 
     if (!cpu.diffuse.empty()) hasDiffuse = SUCCEEDED(LoadTex2D(dev, join(cpu.diffuse), &srvDiffuse));
@@ -65,6 +66,7 @@ void MaterialGPU::Bind(ID3D11DeviceContext* ctx) const
     cb.baseColor[3] = baseColor[3];
     cb.useBaseColor = useBaseColor ? 1u : 0u;
 
+    if (!cbMat) return;
     ctx->UpdateSubresource(cbMat, 0, nullptr, &cb, 0, 0);
     ctx->PSSetConstantBuffers(5, 1, &cbMat);
 }

@@ -15,12 +15,12 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="WorkSpace\#HeaderOnly">
+      <UniqueIdentifier>{2611804f-13b8-4c22-8c9e-4b34d3ddfdae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssimpImporterEX.cpp">
-      <Filter>WorkSpace\#etc.</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
       <Filter>WorkSpace\#etc.</Filter>
     </ClCompile>
     <ClCompile Include="RigidSkeletal.cpp">
@@ -53,18 +53,15 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>WorkSpace\#App</Filter>
     </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>WorkSpace\#etc.</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TutorialApp.h">
       <Filter>WorkSpace\#App</Filter>
     </ClInclude>
     <ClInclude Include="AssimpImporterEX.h">
-      <Filter>WorkSpace\#etc.</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>WorkSpace\#etc.</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshDataEx.h">
       <Filter>WorkSpace\#etc.</Filter>
     </ClInclude>
     <ClInclude Include="RigidSkeletal.h">
@@ -78,6 +75,15 @@
     </ClInclude>
     <ClInclude Include="StaticMesh.h">
       <Filter>WorkSpace\#etc.</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>WorkSpace\#etc.</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSharedCB.h">
+      <Filter>WorkSpace\#HeaderOnly</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshDataEx.h">
+      <Filter>WorkSpace\#HeaderOnly</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

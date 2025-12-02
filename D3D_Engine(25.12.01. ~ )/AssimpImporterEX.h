@@ -11,7 +11,7 @@ public:
     static bool LoadFBX_PNTT_AndMaterials(
         const std::wstring& path,
         MeshData_PNTT& out,
-        bool filpUV = false,   // <- 오타지만 프로젝트 전반과 일치만 하면 OK
+        bool flipUV = false,   
         bool leftHanded = true);
 
     static void ConvertAiMeshToPNTT(const aiMesh* am, MeshData_PNTT& out);

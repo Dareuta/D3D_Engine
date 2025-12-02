@@ -4,7 +4,11 @@
 
 bool StaticMesh::Build(ID3D11Device* dev, const MeshData_PNTT& src)
 {
-    D3D11_BUFFER_DESC vb{};
+	assert(!src.vertices.empty());
+	assert(!src.indices.empty());
+
+    D3D11_BUFFER_DESC vb{};	
+
     vb.BindFlags = D3D11_BIND_VERTEX_BUFFER;
     vb.ByteWidth = (UINT)(src.vertices.size() * sizeof(VertexCPU_PNTT));
     vb.Usage = D3D11_USAGE_IMMUTABLE;
@@ -30,6 +34,8 @@ void StaticMesh::DrawSubmesh(ID3D11DeviceContext* ctx, size_t i) const
     UINT offset = 0; ID3D11Buffer* vb = mVB.Get();
     ctx->IASetVertexBuffers(0, 1, &vb, &mStride, &offset);
     ctx->IASetIndexBuffer(mIB.Get(), DXGI_FORMAT_R32_UINT, 0);
+    
+    assert(i < mRanges.size());
     auto& r = mRanges[i];
     ctx->DrawIndexed(r.indexCount, r.indexStart, 0);
 }

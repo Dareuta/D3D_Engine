@@ -163,6 +163,7 @@ endlocal
     <ClInclude Include="AssimpImporterEX.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MeshDataEx.h" />
+    <ClInclude Include="RenderSharedCB.h" />
     <ClInclude Include="RigidSkeletal.h" />
     <ClInclude Include="SkinnedMesh.h" />
     <ClInclude Include="SkinnedSkeletal.h" />
