@@ -155,7 +155,6 @@ endlocal
     <ClCompile Include="SkinnedSkeletal.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
     <ClCompile Include="StaticMeshResource.cpp" />
-    <ClCompile Include="Texture2DResource.cpp" />
     <ClCompile Include="TutorialApp_D3DInit.cpp" />
     <ClCompile Include="TutorialApp_ImGui.cpp" />
     <ClCompile Include="TutorialApp_Lifecycle.cpp" />

@@ -18,7 +18,7 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="WorkSpace\#etc.\ResourceManager">
+    <Filter Include="WorkSpace\#ResourceManager">
       <UniqueIdentifier>{4b6f20fa-8c76-4435-8082-4e1ea8e51b49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -60,16 +60,13 @@
       <Filter>WorkSpace\#etc.</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>WorkSpace\#etc.\ResourceManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2DResource.cpp">
-      <Filter>WorkSpace\#etc.\ResourceManager</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticMeshResource.cpp">
-      <Filter>WorkSpace\#etc.\ResourceManager</Filter>
+      <Filter>WorkSpace\#ResourceManager</Filter>
     </ClCompile>
     <ClCompile Include="SkinnedModelResource.cpp">
-      <Filter>WorkSpace\#etc.\ResourceManager</Filter>
+      <Filter>WorkSpace\#ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMeshResource.cpp">
+      <Filter>WorkSpace\#ResourceManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,16 +98,16 @@
       <Filter>WorkSpace\#HeaderOnly</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>WorkSpace\#etc.\ResourceManager</Filter>
+      <Filter>WorkSpace\#ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="Texture2DResource.h">
-      <Filter>WorkSpace\#etc.\ResourceManager</Filter>
+      <Filter>WorkSpace\#ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="StaticMeshResource.h">
-      <Filter>WorkSpace\#etc.\ResourceManager</Filter>
+      <Filter>WorkSpace\#ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="SkinnedModelResource.h">
-      <Filter>WorkSpace\#etc.\ResourceManager</Filter>
+      <Filter>WorkSpace\#ResourceManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
