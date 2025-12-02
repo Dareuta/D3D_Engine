@@ -1,4 +1,4 @@
-// InitD3D / UninitD3D
+ï»¿// InitD3D / UninitD3D
 
 #include "TutorialApp.h"
 #include "../D3D_Core/pch.h"
@@ -46,8 +46,8 @@ bool TutorialApp::InitD3D()
 	dsDesc.Height = m_ClientHeight;
 	dsDesc.MipLevels = 1;
 	dsDesc.ArraySize = 1;
-	dsDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; // ÈçÇÑ Á¶ÇÕ
-	dsDesc.SampleDesc.Count = 1;  // ½º¿ÒÃ¼ÀÎ°ú µ¿ÀÏÇÏ°Ô
+	dsDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; // í”í•œ ì¡°í•©
+	dsDesc.SampleDesc.Count = 1;  // ìŠ¤ì™‘ì²´ì¸ê³¼ ë™ì¼í•˜ê²Œ
 	dsDesc.SampleDesc.Quality = 0;
 	dsDesc.Usage = D3D11_USAGE_DEFAULT;
 	dsDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
@@ -58,7 +58,7 @@ bool TutorialApp::InitD3D()
 	D3D11_DEPTH_STENCIL_DESC dss = {};
 	dss.DepthEnable = TRUE;
 	dss.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	dss.DepthFunc = D3D11_COMPARISON_LESS_EQUAL; // ½ºÄ«ÀÌ¹Ú½º ¾µ°Å¸é LEQUALÀÌ ÆíÇÔ. ±âº»Àº LESS
+	dss.DepthFunc = D3D11_COMPARISON_LESS_EQUAL; // ìŠ¤ì¹´ì´ë°•ìŠ¤ ì“¸ê±°ë©´ LEQUALì´ íŽ¸í•¨. ê¸°ë³¸ì€ LESS
 	dss.StencilEnable = FALSE;
 	HR_T(m_pDevice->CreateDepthStencilState(&dss, &m_pDepthStencilState));
 	m_pDeviceContext->OMSetDepthStencilState(m_pDepthStencilState, 0);

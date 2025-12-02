@@ -1,4 +1,4 @@
-// InitScene / UninitScene + ¼¨µµ¿ì ¸®¼Ò½º/»óÅÂ »ı¼º
+ï»¿// InitScene / UninitScene + ì„€ë„ìš° ë¦¬ì†ŒìŠ¤/ìƒíƒœ ìƒì„±
 
 #include "TutorialApp.h"
 #include "../D3D_Core/pch.h"
@@ -365,13 +365,13 @@ bool TutorialApp::CreateShadowResources(ID3D11Device* dev)
 	sd.MinLOD = 0; sd.MaxLOD = D3D11_FLOAT32_MAX;
 	HR_T(dev->CreateSamplerState(&sd, mSamShadowCmp.GetAddressOf()));
 
-	// 3) Depth-bias Rasterizer (±×¸²ÀÚ ÆĞ½º Àü¿ë)
+	// 3) Depth-bias Rasterizer (ê·¸ë¦¼ì íŒ¨ìŠ¤ ì „ìš©)
 	D3D11_RASTERIZER_DESC rs{};
 	rs.FillMode = D3D11_FILL_SOLID;
 	rs.CullMode = D3D11_CULL_BACK;
 	rs.DepthClipEnable = TRUE;
-	rs.DepthBias = (INT)mShadowDepthBias;      // ¿¹: 100~2000 ±¸°£¿¡¼­ Æ©´×
-	rs.SlopeScaledDepthBias = mShadowSlopeBias; // ¿¹: 1.0~2.0
+	rs.DepthBias = (INT)mShadowDepthBias;      // ì˜ˆ: 100~2000 êµ¬ê°„ì—ì„œ íŠœë‹
+	rs.SlopeScaledDepthBias = mShadowSlopeBias; // ì˜ˆ: 1.0~2.0
 	rs.DepthBiasClamp = 0.0f;
 	HR_T(dev->CreateRasterizerState(&rs, mRS_ShadowBias.GetAddressOf()));
 
@@ -392,29 +392,29 @@ void TutorialApp::UpdateLightCameraAndShadowCB(ID3D11DeviceContext* ctx)
 {
 	using namespace DirectX::SimpleMath;
 
-	// 1) Å¸°Ù ÁöÁ¡
+	// 1) íƒ€ê²Ÿ ì§€ì 
 	const Vector3 camPos = m_Camera.m_World.Translation();
 	const Vector3 camDir = m_Camera.GetForward(); // normalized
 	const Vector3 lookAt = mShUI.followCamera
 		? (camPos + camDir * mShUI.focusDist)
 		: mShUI.manualTarget;
 
-	// 2) ¶óÀÌÆ® ¹æÇâ (±¤¼± ÁøÇà ¹æÇâ = ¾Æ·¡·Î ÇâÇÔ)
+	// 2) ë¼ì´íŠ¸ ë°©í–¥ (ê´‘ì„  ì§„í–‰ ë°©í–¥ = ì•„ë˜ë¡œ í–¥í•¨)
 	Vector3 lightDir = Vector3::TransformNormal(
 		Vector3::UnitZ,
 		Matrix::CreateFromYawPitchRoll(m_LightYaw, m_LightPitch, 0.0f)
 	);
 	lightDir.Normalize();
 
-	// 3) ¶óÀÌÆ® "°è»ê¿ë À§Ä¡"
+	// 3) ë¼ì´íŠ¸ "ê³„ì‚°ìš© ìœ„ì¹˜"
 	const Vector3 lightPos = mShUI.useManualPos
 		? mShUI.manualPos
 		: (lookAt - lightDir * mShUI.lightDist);
 
-	// 4) up Æ¯ÀÌÁ¡ È¸ÇÇ
+	// 4) up íŠ¹ì´ì  íšŒí”¼
 	const Vector3 up = (fabsf(lightDir.y) > 0.97f) ? Vector3::UnitZ : Vector3::UnitY;
 
-	// 5) ÀÚµ¿ Ä¿¹ö(¿ø±Ù ÇÁ·¯½ºÅÒ) ¶Ç´Â Á÷±³(¿É¼Ç)
+	// 5) ìë™ ì»¤ë²„(ì›ê·¼ í”„ëŸ¬ìŠ¤í…€) ë˜ëŠ” ì§êµ(ì˜µì…˜)
 	if (mShUI.autoCover) {
 		const float fovY = XMConvertToRadians(m_FovDegree);
 		const float aspect = float(m_ClientWidth) / float(m_ClientHeight);
@@ -436,7 +436,7 @@ void TutorialApp::UpdateLightCameraAndShadowCB(ID3D11DeviceContext* ctx)
 
 	Matrix P;
 	if (mShUI.useOrtho) {
-		// Á÷±³ Åõ¿µ(¾ÈÁ¤Àû): autoCover °è»ê rÀ» ±×´ë·Î ¾¸
+		// ì§êµ íˆ¬ì˜(ì•ˆì •ì ): autoCover ê³„ì‚° rì„ ê·¸ëŒ€ë¡œ ì”€
 		const float fovY = XMConvertToRadians(m_FovDegree);
 		const float aspect = float(m_ClientWidth) / float(m_ClientHeight);
 		const float halfH = tanf(0.5f * fovY) * mShUI.focusDist * mShUI.coverMargin;
@@ -445,25 +445,25 @@ void TutorialApp::UpdateLightCameraAndShadowCB(ID3D11DeviceContext* ctx)
 		P = Matrix::CreateOrthographicOffCenter(l, r, b, t, mShadowNear, mShadowFar);
 	}
 	else {
-		// ±âÁ¸: ¿ø±Ù Åõ¿µ
+		// ê¸°ì¡´: ì›ê·¼ íˆ¬ì˜
 		P = Matrix::CreatePerspectiveFieldOfView(mShadowFovY, aspectSh, mShadowNear, mShadowFar);
 	}
 
 	mLightView = V;
 	mLightProj = P;
 
-	// 6) b6 ¾÷·Îµå
+	// 6) b6 ì—…ë¡œë“œ
 	struct ShadowCB_ { Matrix LVP; Vector4 Params; } scb;
 	scb.LVP = XMMatrixTranspose(V * P);
-	scb.Params = Vector4(/*compareBias*/ 0.0f, 1.0f / mShadowW, 1.0f / mShadowH, 0.0f); // ºñ±³¹ÙÀÌ¾î½º 0À¸·Î ¿î¿ë
+	scb.Params = Vector4(/*compareBias*/ 0.0f, 1.0f / mShadowW, 1.0f / mShadowH, 0.0f); // ë¹„êµë°”ì´ì–´ìŠ¤ 0ìœ¼ë¡œ ìš´ìš©
 	ctx->UpdateSubresource(mCB_Shadow.Get(), 0, nullptr, &scb, 0, 0);
 
 	ID3D11Buffer* b6 = mCB_Shadow.Get();
 	ctx->VSSetConstantBuffers(6, 1, &b6);
 	ctx->PSSetConstantBuffers(6, 1, &b6);
 
-	// 7) ¸ŞÀÎ Á¶¸í CB(vLightDir)µµ µ¿ÀÏ Á¤ÀÇ·Î À¯Áö
-	//    ¼ÎÀÌµù¿¡¼­ NdotL = dot(N, -vLightDir)¸¦ »ç¿ëÇÏµµ·Ï HLSL È®ÀÎ
+	// 7) ë©”ì¸ ì¡°ëª… CB(vLightDir)ë„ ë™ì¼ ì •ì˜ë¡œ ìœ ì§€
+	//    ì…°ì´ë”©ì—ì„œ NdotL = dot(N, -vLightDir)ë¥¼ ì‚¬ìš©í•˜ë„ë¡ HLSL í™•ì¸
 }
 
 bool TutorialApp::CreateDepthOnlyShaders(ID3D11Device* dev)
@@ -510,12 +510,12 @@ void TutorialApp::BuildLightCameraAndUpload(ID3D11DeviceContext* ctx,
 	const DirectX::SimpleMath::Vector3& lightDir_unit,
 	float focusDist, float lightDist)
 {
-	// === ¶óÀÌÆ® Ä«¸Ş¶ó ±¸¼º ===
+	// === ë¼ì´íŠ¸ ì¹´ë©”ë¼ êµ¬ì„± ===
 	using namespace DirectX;
 	const Vector3 eyePos = m_Camera.m_World.Translation();
 	const Vector3 camFwd = m_Camera.GetForward();
 
-	// 1) lookAt °áÁ¤
+	// 1) lookAt ê²°ì •
 	Vector3 lookAt;
 	if (mShUI.followCamera) {
 		lookAt = eyePos + camFwd * mShUI.focusDist;
@@ -524,11 +524,11 @@ void TutorialApp::BuildLightCameraAndUpload(ID3D11DeviceContext* ctx,
 		lookAt = XMLoadFloat3(&mShUI.manualTarget);
 	}
 
-	// 2) ¶óÀÌÆ® ¹æÇâ (±âÁ¸ yaw/pitch ¡æ vLightDir)
+	// 2) ë¼ì´íŠ¸ ë°©í–¥ (ê¸°ì¡´ yaw/pitch â†’ vLightDir)
 	Vector3 Ldir(vLightDir.x, vLightDir.y, vLightDir.z);
 	Ldir.Normalize();
 
-	// 3) lightPos °áÁ¤ (directionalÀ» '°è»ê¿ë À§Ä¡'·Î)
+	// 3) lightPos ê²°ì • (directionalì„ 'ê³„ì‚°ìš© ìœ„ì¹˜'ë¡œ)
 	Vector3 lightPos;
 	if (mShUI.useManualPos) {
 		lightPos = XMLoadFloat3(&mShUI.manualPos);
@@ -537,41 +537,41 @@ void TutorialApp::BuildLightCameraAndUpload(ID3D11DeviceContext* ctx,
 		lightPos = lookAt - Ldir * mShUI.lightDist;
 	}
 
-	// 4) View Çà·Ä
+	// 4) View í–‰ë ¬
 	const Matrix lightView = Matrix::CreateLookAt(lightPos, lookAt, Vector3::UnitY);
 
-	// 5) Proj Çà·Ä
+	// 5) Proj í–‰ë ¬
 	float aspectSh = float(mShadowW) / float(mShadowH);
 
-	// ¡°Ä«¸Ş¶ó È­¸éÀÇ focusDist Æò¸é Á÷»ç°¢Çü¡±À» ¶óÀÌÆ® ÇÁ·¯½ºÅÒÀÌ µ¤°Ô(ÀÚµ¿ Ä¿¹ö)
+	// â€œì¹´ë©”ë¼ í™”ë©´ì˜ focusDist í‰ë©´ ì§ì‚¬ê°í˜•â€ì„ ë¼ì´íŠ¸ í”„ëŸ¬ìŠ¤í…€ì´ ë®ê²Œ(ìë™ ì»¤ë²„)
 	if (mShUI.autoCover) {
-		// Ä«¸Ş¶ó ÆÄ¶ó¹ÌÅÍ¿¡¼­ ¹İ³ôÀÌ/¹İ³Êºñ
+		// ì¹´ë©”ë¼ íŒŒë¼ë¯¸í„°ì—ì„œ ë°˜ë†’ì´/ë°˜ë„ˆë¹„
 		const float camFovY = XMConvertToRadians(m_FovDegree);
 		const float halfH = tanf(camFovY * 0.5f) * mShUI.focusDist;
 		const float halfW = halfH * (m_ClientWidth / float(m_ClientHeight));
 		const float r = sqrtf(halfW * halfW + halfH * halfH) * mShUI.coverMargin;
 
-		// lightDist ±âÁØÀ¸·Î FOV / Å¬¸³ ÀÚµ¿ »êÃâ
+		// lightDist ê¸°ì¤€ìœ¼ë¡œ FOV / í´ë¦½ ìë™ ì‚°ì¶œ
 		const float d = mShUI.lightDist;
 		const float nz = max(d - r, 0.01f);
 		const float fz = d + r;
 		mShadowNear = nz;
 		mShadowFar = fz;
-		mShadowFovY = 2.0f * atanf(r / d); // ¶óÀÌÆ® FOVY ÀÚµ¿È­
+		mShadowFovY = 2.0f * atanf(r / d); // ë¼ì´íŠ¸ FOVY ìë™í™”
 	}
 
-	// ÃÖÁ¾ Åõ¿µ
+	// ìµœì¢… íˆ¬ì˜
 	const Matrix lightProj = Matrix::CreatePerspectiveFieldOfView(mShadowFovY, aspectSh, mShadowNear, mShadowFar);
 	const Matrix lightVP = lightView * lightProj;
 
-	// (µğ¹ö±×¿ë º¸°ü)
+	// (ë””ë²„ê·¸ìš© ë³´ê´€)
 	mLightView = lightView;
 	mLightProj = lightProj;
 
-	// 4) CB(b6) ¾÷·Îµå (Shared.hlsli: LightViewProj, ShadowParams)
+	// 4) CB(b6) ì—…ë¡œë“œ (Shared.hlsli: LightViewProj, ShadowParams)
 	struct ShadowCB_ {
 		DirectX::XMFLOAT4X4 LVP;
-		DirectX::XMFLOAT4   Params; // x=bias(¹Ì»ç¿ë), y=1/w, z=1/h, w=0
+		DirectX::XMFLOAT4   Params; // x=bias(ë¯¸ì‚¬ìš©), y=1/w, z=1/h, w=0
 	} scb{};
 
 	auto LVP = (mLightView * mLightProj).Transpose();
@@ -590,30 +590,30 @@ void TutorialApp::RenderShadowPass(ID3D11DeviceContext* ctx,
 	const DirectX::SimpleMath::Vector3& lightDir_unit,
 	float focusDist, float lightDist)
 {
-	// 0) LightViewProj °è»ê + CB(b6) ¾÷·Îµå
+	// 0) LightViewProj ê³„ì‚° + CB(b6) ì—…ë¡œë“œ
 	BuildLightCameraAndUpload(ctx, camPos, camForward, lightDir_unit, focusDist, lightDist);
 
-	// 1) Å¸±ê ¼³Á¤ (ÄÃ·¯ RTV ¾øÀ½, DSV¸¸)
+	// 1) íƒ€ê¹ƒ ì„¤ì • (ì»¬ëŸ¬ RTV ì—†ìŒ, DSVë§Œ)
 	ctx->OMSetRenderTargets(0, nullptr, mShadowDSV.Get());
 	ctx->ClearDepthStencilView(mShadowDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 	ctx->RSSetViewports(1, &mShadowVP);
 	ctx->RSSetState(mRS_ShadowBias.Get());
 
-	// 2) °ø¿ë »óÅÂ
+	// 2) ê³µìš© ìƒíƒœ
 	float blend[4] = { 0,0,0,0 };
 	ctx->OMSetBlendState(nullptr, blend, 0xFFFFFFFF);
 	ID3D11SamplerState* cmp = mSamShadowCmp.Get();
 	ctx->PSSetSamplers(1, 1, &cmp); // s1
 
 	ID3D11SamplerState* lin = m_pSamplerLinear;
-	ctx->PSSetSamplers(0, 1, &lin); // s0 (samLinear) - opacity »ùÇÃ¸µ¿ë	
+	ctx->PSSetSamplers(0, 1, &lin); // s0 (samLinear) - opacity ìƒ˜í”Œë§ìš©	
 }
 
 
 
 void TutorialApp::UninitScene()
 {
-	// FBX Àü¿ë ÆÄÀÌÇÁ¶óÀÎ ÀÚ¿ø
+	// FBX ì „ìš© íŒŒì´í”„ë¼ì¸ ìì›
 	SAFE_RELEASE(m_pMeshIL);
 	SAFE_RELEASE(m_pMeshVS);
 	SAFE_RELEASE(m_pMeshPS);
@@ -649,11 +649,11 @@ void TutorialApp::UninitScene()
 	SAFE_RELEASE(m_pBS_Alpha);
 	SAFE_RELEASE(m_pDSS_Opaque);
 	SAFE_RELEASE(m_pDSS_Trans);
-	//¸Ó°¡ ÀÌ¸® ¸¹À½
+	//ë¨¸ê°€ ì´ë¦¬ ë§ìŒ
 	SAFE_RELEASE(m_pSkinnedIL);
 	SAFE_RELEASE(m_pSkinnedVS);
 	SAFE_RELEASE(m_pBoneCB);
-	//Å÷Å÷
+	//íˆ°íˆ°
 	SAFE_RELEASE(m_pRampSRV);
 	SAFE_RELEASE(m_pToonCB);
 }

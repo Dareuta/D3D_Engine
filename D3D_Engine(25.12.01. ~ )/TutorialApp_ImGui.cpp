@@ -1,4 +1,4 @@
-// InitImGUI / UninitImGUI / UpdateImGUI / AnimUI
+ï»¿// InitImGUI / UninitImGUI / UpdateImGUI / AnimUI
 
 #include "TutorialApp.h"
 #include "../D3D_Core/pch.h"
@@ -9,7 +9,7 @@ bool TutorialApp::InitImGUI()
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
-	//ÆùÆ® µî·Ï
+	//í°íŠ¸ ë“±ë¡
 	ImGuiIO& io = ImGui::GetIO();
 	const ImWchar* kr = io.Fonts->GetGlyphRangesKorean();
 	io.Fonts->Clear();
@@ -64,13 +64,13 @@ void TutorialApp::UpdateImGUI()
 	ImGui::NewFrame();
 
 	ImGui::SetNextWindowSize(ImVec2(420, 0), ImGuiCond_FirstUseEver);
-	if (ImGui::Begin(u8"ÀÓ²ÙÀÌ(IMGUI)"))
+	if (ImGui::Begin(u8"ì„ê¾¸ì´(IMGUI)"))
 	{
-		// »ó´Ü »óÅÂ
+		// ìƒë‹¨ ìƒíƒœ
 		ImGui::Text("FPS: %.1f (%.3f ms)", ImGui::GetIO().Framerate, 1000.0f / ImGui::GetIO().Framerate);
 		ImGui::Separator();
 
-		// ½º³À¼¦ 1È¸ ÀúÀå
+		// ìŠ¤ëƒ…ìƒ· 1íšŒ ì €ì¥
 		static bool s_inited = false;
 		static double s_initAnimT = 0.0;
 		static float  s_initAnimSpeed = 1.0f;
@@ -98,8 +98,8 @@ void TutorialApp::UpdateImGUI()
 			ImGui::SliderFloat("FOV (deg)", &m_FovDegree, 10.0f, 120.0f, "%.1f");
 			ImGui::DragFloat("Near", &m_Near, 0.001f, 0.0001f, 10.0f, "%.5f");
 			ImGui::DragFloat("Far", &m_Far, 0.1f, 0.01f, 20000.0f);
-			ImGui::Text(u8"Ä«¸Ş¶ó ¼Óµµ º¯°æ: F1 ~ F3");
-			if (ImGui::Button(u8"Ä«¸Ş¶ó ÃÊ±âÈ­")) {
+			ImGui::Text(u8"ì¹´ë©”ë¼ ì†ë„ ë³€ê²½: F1 ~ F3");
+			if (ImGui::Button(u8"ì¹´ë©”ë¼ ì´ˆê¸°í™”")) {
 				m_FovDegree = s_initFov; m_Near = s_initNear; m_Far = s_initFar;
 			}
 		}
@@ -118,7 +118,7 @@ void TutorialApp::UpdateImGUI()
 
 		if (ImGui::Begin("Shadow / Light Camera"))
 		{
-			// ¦¡¦¡ Lighting ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+			// â”€â”€ Lighting â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 			ImGui::SetNextItemOpen(true, ImGuiCond_FirstUseEver);
 			if (ImGui::CollapsingHeader(u8"Lighting", ImGuiTreeNodeFlags_DefaultOpen))
 			{
@@ -126,7 +126,7 @@ void TutorialApp::UpdateImGUI()
 				ImGui::SliderAngle("Pitch", &m_LightPitch, -89.0f, 89.0f);
 				ImGui::ColorEdit3("Color", (float*)&m_LightColor);
 				ImGui::SliderFloat("Intensity", &m_LightIntensity, 0.0f, 5.0f);
-				if (ImGui::Button(u8"Á¶¸í ÃÊ±âÈ­")) {
+				if (ImGui::Button(u8"ì¡°ëª… ì´ˆê¸°í™”")) {
 					m_LightColor = s_initLightColor;
 					m_LightYaw = s_initLightYaw;
 					m_LightPitch = s_initLightPitch;
@@ -134,7 +134,7 @@ void TutorialApp::UpdateImGUI()
 				}
 			}
 
-			// ¦¡¦¡ ShadowMap Preview / Grid ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+			// â”€â”€ ShadowMap Preview / Grid â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 			ImGui::Checkbox("Show ShadowMap", &mShUI.showSRV);
 			ImGui::Checkbox("Show Grid", &mDbg.showGrid);
 			ImGui::Checkbox("Use Orthographic", &mShUI.useOrtho);
@@ -146,23 +146,23 @@ void TutorialApp::UpdateImGUI()
 				else    ImGui::TextUnformatted("Shadow SRV is null");
 			}
 
-			// ¦¡¦¡ Focus / Light (Ä«¸Ş¶ó Àü¹æ ¶ô) ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+			// â”€â”€ Focus / Light (ì¹´ë©”ë¼ ì „ë°© ë½) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 			ImGui::SeparatorText("Focus & Light (locked to camera)");
 			ImGui::DragFloat("FocusDist", &mShUI.focusDist, 0.1f, 0.1f, 5000.0f);
 			ImGui::DragFloat("LightDist", &mShUI.lightDist, 0.1f, 0.1f, 10000.0f);
 			ImGui::DragFloat("Margin", &mShUI.coverMargin, 0.01f, 1.0f, 2.0f);
 
-			// ¦¡¦¡ DepthOnly ¿É¼Ç ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+			// â”€â”€ DepthOnly ì˜µì…˜ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 			ImGui::SeparatorText("DepthOnly");
 			ImGui::SliderFloat("AlphaCut (DepthOnly)", &mShadowAlphaCut, 0.0f, 1.0f, "%.3f");
 
-			// ¦¡¦¡ Bias(ºñ±³/·¡½ºÅÍ) ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+			// â”€â”€ Bias(ë¹„êµ/ë˜ìŠ¤í„°) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 			ImGui::SeparatorText("Bias");
 			ImGui::DragFloat("CmpBias", &mShadowCmpBias, 0.0001f, 0.0f, 0.02f, "%.5f");
 			ImGui::DragInt("DepthBias", (int*)&mShadowDepthBias, 1, 0, 200000);
 			ImGui::DragFloat("SlopeScaledBias", &mShadowSlopeBias, 0.01f, 0.0f, 32.0f, "%.2f");
 
-			// ¦¡¦¡ ShadowMap ÇØ»óµµ + Àç»ı¼º ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+			// â”€â”€ ShadowMap í•´ìƒë„ + ì¬ìƒì„± â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 			ImGui::SeparatorText("Shadowmap Size");
 			static int resIdx =
 				(mShadowW >= 4096) ? 3 :
@@ -171,19 +171,19 @@ void TutorialApp::UpdateImGUI()
 			const char* kResItems[] = { "512", "1024", "2048", "4096" };
 			ImGui::Combo("Resolution", &resIdx, kResItems, IM_ARRAYSIZE(kResItems));
 
-			// ÀĞ±â Àü¿ë(ÀÚµ¿ Ä¿¹ö °á°ú È®ÀÎ)
+			// ì½ê¸° ì „ìš©(ìë™ ì»¤ë²„ ê²°ê³¼ í™•ì¸)
 			ImGui::SeparatorText("Derived (read-only)");
 			ImGui::Text("FovY: %.1f deg", DirectX::XMConvertToDegrees(mShadowFovY));
 			ImGui::Text("Near/Far: %.3f / %.3f", mShadowNear, mShadowFar);
 
-			// Àû¿ë ¹öÆ°: RS(¹ÙÀÌ¾î½º) + ÅØ½ºÃ³(SRV/DSV) Àç»ı¼º
+			// ì ìš© ë²„íŠ¼: RS(ë°”ì´ì–´ìŠ¤) + í…ìŠ¤ì²˜(SRV/DSV) ì¬ìƒì„±
 			if (ImGui::Button("Apply (recreate shadow map)")) {
 				int sz = 512;
 				if (resIdx == 1) sz = 1024;
 				else if (resIdx == 2) sz = 2048;
 				else if (resIdx == 3) sz = 4096;
 				mShadowW = mShadowH = sz;
-				CreateShadowResources(m_pDevice); // RS(DepthBias/SlopeBias)¿Í DSV/SRV °»½Å
+				CreateShadowResources(m_pDevice); // RS(DepthBias/SlopeBias)ì™€ DSV/SRV ê°±ì‹ 
 			}
 		}
 		ImGui::End();
@@ -197,7 +197,7 @@ void TutorialApp::UpdateImGUI()
 			ImGui::ColorEdit3("k_a (ambient refl.)", (float*)&m_Ka);
 			ImGui::SliderFloat("k_s (specular)", &m_Ks, 0.0f, 2.0f, "%.3f", ImGuiSliderFlags_AlwaysClamp);
 			ImGui::SliderFloat("shininess", &m_Shininess, 2.0f, 256.0f, "%.0f");
-			if (ImGui::Button(u8"ÀçÁú ÃÊ±âÈ­")) {
+			if (ImGui::Button(u8"ì¬ì§ˆ ì´ˆê¸°í™”")) {
 				m_Ka = s_initKa; m_Ia = s_initIa; m_Ks = s_initKs; m_Shininess = s_initShin;
 			}
 		}
@@ -211,7 +211,7 @@ void TutorialApp::UpdateImGUI()
 					ImGui::DragFloat3("Position", (float*)&xf.pos, 0.1f, -10000.0f, 10000.0f);
 					ImGui::DragFloat3("Rotation (deg XYZ)", (float*)&xf.rotD, 0.5f, -720.0f, 720.0f);
 					ImGui::DragFloat3("Scale", (float*)&xf.scl, 0.01f, 0.0001f, 1000.0f);
-					if (ImGui::Button(u8"¸ğµ¨ ÃÊ±âÈ­")) {
+					if (ImGui::Button(u8"ëª¨ë¸ ì´ˆê¸°í™”")) {
 						xf.pos = xf.initPos; xf.rotD = xf.initRotD; xf.scl = xf.initScl; xf.enabled = true;
 					}
 					ImGui::TreePop();
@@ -223,11 +223,11 @@ void TutorialApp::UpdateImGUI()
 			ModelUI("Zelda", mZeldaX);
 
 			// Models 
-			if (ImGui::TreeNode(u8"Debug Arrow (¶óÀÌÆ® ¹æÇâ)")) {
+			if (ImGui::TreeNode(u8"Debug Arrow (ë¼ì´íŠ¸ ë°©í–¥)")) {
 				ImGui::Checkbox("Enabled", &mDbg.showLightArrow);
 				ImGui::DragFloat3("Position", (float*)&m_ArrowPos, 0.1f, -10000.0f, 10000.0f);
 				ImGui::DragFloat3("Scale", (float*)&m_ArrowScale, 0.01f, 0.0001f, 1000.0f);
-				if (ImGui::Button(u8"È­»ìÇ¥ ÃÊ±âÈ­")) {
+				if (ImGui::Button(u8"í™”ì‚´í‘œ ì´ˆê¸°í™”")) {
 					m_ArrowPos = s_initArrowPos;
 					m_ArrowScale = s_initArrowScale;
 					mDbg.showLightArrow = true;
@@ -235,7 +235,7 @@ void TutorialApp::UpdateImGUI()
 				ImGui::TreePop();
 			}
 
-			if (ImGui::Button(u8"¸ğµç ¸ğµ¨ ÃÊ±âÈ­")) {
+			if (ImGui::Button(u8"ëª¨ë“  ëª¨ë¸ ì´ˆê¸°í™”")) {
 				for (XformUI* p : { &mTreeX, &mCharX, &mZeldaX }) {
 					p->pos = p->initPos; p->rotD = p->initRotD; p->scl = p->initScl; p->enabled = true;
 				}
@@ -252,7 +252,7 @@ void TutorialApp::UpdateImGUI()
 			ImGui::DragFloat3("Position##Box", (float*)&mBoxX.pos, 0.1f, -10000.0f, 10000.0f);
 			ImGui::DragFloat3("Rotation (deg XYZ)##Box", (float*)&mBoxX.rotD, 0.5f, -720.0f, 720.0f);
 			ImGui::DragFloat3("Scale##Box", (float*)&mBoxX.scl, 0.01f, 0.0001f, 1000.0f);
-			if (ImGui::Button(u8"Æ®·£½ºÆû ÃÊ±âÈ­")) {
+			if (ImGui::Button(u8"íŠ¸ëœìŠ¤í¼ ì´ˆê¸°í™”")) {
 				mBoxX.pos = mBoxX.initPos; mBoxX.rotD = mBoxX.initRotD; mBoxX.scl = mBoxX.initScl; mBoxX.enabled = true;
 			}
 
@@ -269,7 +269,7 @@ void TutorialApp::UpdateImGUI()
 					durS,
 					[&](double tNow) { mBoxRig->EvaluatePose(tNow); });
 
-				if (ImGui::Button(u8"¾Ö´Ï¸ŞÀÌ¼Ç ÃÊ±âÈ­")) {
+				if (ImGui::Button(u8"ì• ë‹ˆë©”ì´ì…˜ ì´ˆê¸°í™”")) {
 					mBoxAC.play = true; mBoxAC.loop = true; mBoxAC.speed = 1.0f; mBoxAC.t = 0.0;
 					mBoxRig->EvaluatePose(mBoxAC.t);
 				}
@@ -285,7 +285,7 @@ void TutorialApp::UpdateImGUI()
 			ImGui::DragFloat3("Position", (float*)&mSkinX.pos, 0.1f, -10000.0f, 10000.0f);
 			ImGui::DragFloat3("Rotation (deg XYZ)", (float*)&mSkinX.rotD, 0.5f, -720.0f, 720.0f);
 			ImGui::DragFloat3("Scale", (float*)&mSkinX.scl, 0.01f, 0.0001f, 1000.0f);
-			if (ImGui::Button(u8"Æ®·£½ºÆû ÃÊ±âÈ­##skin")) {
+			if (ImGui::Button(u8"íŠ¸ëœìŠ¤í¼ ì´ˆê¸°í™”##skin")) {
 				mSkinX.pos = mSkinX.initPos; mSkinX.rotD = mSkinX.initRotD; mSkinX.scl = mSkinX.initScl; mSkinX.enabled = true;
 			}
 
@@ -300,7 +300,7 @@ void TutorialApp::UpdateImGUI()
 					durS,
 					[&](double tNow) { mSkinRig->EvaluatePose(tNow); });
 
-				if (ImGui::Button(u8"¾Ö´Ï¸ŞÀÌ¼Ç ÃÊ±âÈ­##skin")) {
+				if (ImGui::Button(u8"ì• ë‹ˆë©”ì´ì…˜ ì´ˆê¸°í™”##skin")) {
 					mSkinAC.play = true; mSkinAC.loop = true; mSkinAC.speed = 1.0f; mSkinAC.t = 0.0;
 					mSkinRig->EvaluatePose(mSkinAC.t);
 				}
@@ -323,7 +323,7 @@ void TutorialApp::UpdateImGUI()
 			ImGui::Checkbox("Wireframe", &mDbg.wireframe); ImGui::SameLine();
 			ImGui::Checkbox("Cull None", &mDbg.cullNone);
 			ImGui::Checkbox("Depth Write/Test OFF (mesh)", &mDbg.depthWriteOff);
-			ImGui::Checkbox("Freeze Time", &mDbg.freezeTime); // ÀÌ°Å ÀÛµ¿ ¾ÈÇÔ
+			ImGui::Checkbox("Freeze Time", &mDbg.freezeTime); // ì´ê±° ì‘ë™ ì•ˆí•¨
 
 			ImGui::Separator();
 
@@ -333,8 +333,8 @@ void TutorialApp::UpdateImGUI()
 			ImGui::Checkbox("Force AlphaClip", &mDbg.forceAlphaClip);
 			ImGui::DragFloat("alphaCut", &mDbg.alphaCut, 0.01f, 0.0f, 1.0f);
 
-			if (ImGui::Button(u8"µğ¹ö±× Åä±Û ÃÊ±âÈ­")) {
-				mDbg = DebugToggles(); // ¸®¼Â
+			if (ImGui::Button(u8"ë””ë²„ê·¸ í† ê¸€ ì´ˆê¸°í™”")) {
+				mDbg = DebugToggles(); // ë¦¬ì…‹
 			}
 		}
 	}

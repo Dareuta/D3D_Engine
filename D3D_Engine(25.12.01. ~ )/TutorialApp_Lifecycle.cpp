@@ -1,4 +1,4 @@
-// OnInitialize/OnUninitialize/OnUpdate/OnRender/WndProc
+ï»¿// OnInitialize/OnUninitialize/OnUpdate/OnRender/WndProc
 
 #include "TutorialApp.h"
 #include "../D3D_Core/pch.h"
@@ -54,11 +54,11 @@ void TutorialApp::OnUpdate()
 				mBoxAC.t = fmod(mBoxAC.t, durSec); if (mBoxAC.t < 0.0) mBoxAC.t += durSec;
 			}
 			else {
-				if (mBoxAC.t >= durSec) { mBoxAC.t = durSec; mBoxAC.play = false; } // ³¡¿¡¼­ Á¤Áö
-				if (mBoxAC.t < 0.0) { mBoxAC.t = 0.0;   mBoxAC.play = false; } // ¾Õ¿¡¼­ Á¤Áö
+				if (mBoxAC.t >= durSec) { mBoxAC.t = durSec; mBoxAC.play = false; } // ëì—ì„œ ì •ì§€
+				if (mBoxAC.t < 0.0) { mBoxAC.t = 0.0;   mBoxAC.play = false; } // ì•žì—ì„œ ì •ì§€
 			}
 		}
-		mBoxRig->EvaluatePose(mBoxAC.t, mBoxAC.loop);  // ¡ç loop Àü´Þ
+		mBoxRig->EvaluatePose(mBoxAC.t, mBoxAC.loop);  // â† loop ì „ë‹¬
 	}
 
 	// --- Skinned ---
@@ -84,14 +84,14 @@ void TutorialApp::OnRender()
 {
 	auto* ctx = m_pDeviceContext;
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-	// 0) ¶óÀÌÆ® Ä«¸Þ¶ó/¼¨µµ¿ì CB ¾÷µ¥ÀÌÆ® 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	// 0) ë¼ì´íŠ¸ ì¹´ë©”ë¼/ì„€ë„ìš° CB ì—…ë°ì´íŠ¸ 
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	UpdateLightCameraAndShadowCB(ctx); // mLightView, mLightProj, mShadowVP, mCB_Shadow
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-	// 1) ±âº» ÆÄ¶ó¹ÌÅÍ Å¬·¥ÇÁ + ¸ÞÀÎ RT Å¬¸®¾î
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	// 1) ê¸°ë³¸ íŒŒë¼ë¯¸í„° í´ëž¨í”„ + ë©”ì¸ RT í´ë¦¬ì–´
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	if (m_FovDegree < 10.0f)       m_FovDegree = 10.0f;
 	else if (m_FovDegree > 120.0f) m_FovDegree = 120.0f;
 	if (m_Near < 0.0001f)          m_Near = 0.0001f;
@@ -101,7 +101,7 @@ void TutorialApp::OnRender()
 	const float aspect = m_ClientWidth / (float)m_ClientHeight;
 	m_Projection = XMMatrixPerspectiveFovLH(XMConvertToRadians(m_FovDegree), aspect, m_Near, m_Far);
 
-	// RS ¼±ÅÃ
+	// RS ì„ íƒ
 	if (mDbg.wireframe && m_pWireRS)         ctx->RSSetState(m_pWireRS);
 	else if (mDbg.cullNone && m_pDbgRS)      ctx->RSSetState(m_pDbgRS);
 	else                                     ctx->RSSetState(m_pCullBackRS);
@@ -110,9 +110,9 @@ void TutorialApp::OnRender()
 	ctx->ClearRenderTargetView(m_pRenderTargetView, clearColor);
 	ctx->ClearDepthStencilView(m_pDepthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-	// 2) °øÅë CB0(b0) / Blinn(b1) ¾÷·Îµå (¸ÞÀÎ Ä«¸Þ¶ó ±âÁØ)
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	// 2) ê³µí†µ CB0(b0) / Blinn(b1) ì—…ë¡œë“œ (ë©”ì¸ ì¹´ë©”ë¼ ê¸°ì¤€)
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	Matrix view; m_Camera.GetViewMatrix(view);
 	Matrix viewNoTrans = view; viewNoTrans._41 = viewNoTrans._42 = viewNoTrans._43 = 0.0f;
 
@@ -122,7 +122,7 @@ void TutorialApp::OnRender()
 	cb.mView = XMMatrixTranspose(view);
 	cb.mProjection = XMMatrixTranspose(m_Projection);
 
-	// µð·º¼Å³Î ¶óÀÌÆ®(dir from yaw/pitch)
+	// ë””ë ‰ì…”ë„ ë¼ì´íŠ¸(dir from yaw/pitch)
 	XMMATRIX R = XMMatrixRotationRollPitchYaw(m_LightPitch, m_LightYaw, 0.0f);
 	XMVECTOR base = XMVector3Normalize(XMVectorSet(0, 0, 1, 0));
 	XMVECTOR L = XMVector3Normalize(XMVector3TransformNormal(base, R));
@@ -146,14 +146,14 @@ void TutorialApp::OnRender()
 	ctx->UpdateSubresource(m_pBlinnCB, 0, nullptr, &bp, 0, 0);
 	ctx->PSSetConstantBuffers(1, 1, &m_pBlinnCB);
 
-	// °øÅë ¼ÎÀÌ´õ(Á¤Àû ¸Þ½¬) ±âº» ¹ÙÀÎµå
+	// ê³µí†µ ì…°ì´ë”(ì •ì  ë©”ì‰¬) ê¸°ë³¸ ë°”ì¸ë“œ
 	ctx->IASetInputLayout(m_pMeshIL);
 	ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	ctx->VSSetShader(m_pMeshVS, nullptr, 0);
 	ctx->PSSetShader(m_pMeshPS, nullptr, 0);
 	if (m_pSamplerLinear) ctx->PSSetSamplers(0, 1, &m_pSamplerLinear);
 
-	// ¼¨µµ¿ì¿ë ÆÄ¶ó¹ÌÅÍ(ÇÑ ¹ø¸¸)
+	// ì„€ë„ìš°ìš© íŒŒë¼ë¯¸í„°(í•œ ë²ˆë§Œ)
 	struct ShadowCB_ { Matrix LVP; Vector4 Params; } scb;
 	scb.LVP = XMMatrixTranspose(mLightView * mLightProj);
 	scb.Params = Vector4(mShadowCmpBias, 1.0f / mShadowW, 1.0f / mShadowH, 0.0f);
@@ -162,29 +162,29 @@ void TutorialApp::OnRender()
 	ctx->VSSetConstantBuffers(6, 1, &b6);
 	ctx->PSSetConstantBuffers(6, 1, &b6);
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	// 3) SHADOW PASS (DepthOnly)  
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	ID3D11RasterizerState* rsBeforeShadow = nullptr;
 	ctx->RSGetState(&rsBeforeShadow); // AddRef
 
 	{
-		// t5 ¾ð¹ÙÀÎµå, DSV only
+		// t5 ì–¸ë°”ì¸ë“œ, DSV only
 		ID3D11ShaderResourceView* nullSRV[1] = { nullptr };
 		ctx->PSSetShaderResources(5, 1, nullSRV);
 		ctx->OMSetRenderTargets(0, nullptr, mShadowDSV.Get());
 		ctx->ClearDepthStencilView(mShadowDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0);
 
-		// ¶óÀÌÆ®¿ë VP/RS
+		// ë¼ì´íŠ¸ìš© VP/RS
 		ctx->RSSetViewports(1, &mShadowVP);
 		if (mRS_ShadowBias) ctx->RSSetState(mRS_ShadowBias.Get());
 
-		// Depth Àü¿ë ¼ÎÀÌ´õ ¹ÙÀÎµå
-		// Á¤Àû: m_pMeshVS + mPS_Depth / ½ºÅ°´×: mVS_DepthSkinned + mPS_Depth
-		// (Á¤Àû ¸ÕÀú ¾²µµ·Ï Á¤¸®)
+		// Depth ì „ìš© ì…°ì´ë” ë°”ì¸ë“œ
+		// ì •ì : m_pMeshVS + mPS_Depth / ìŠ¤í‚¤ë‹: mVS_DepthSkinned + mPS_Depth
+		// (ì •ì  ë¨¼ì € ì“°ë„ë¡ ì •ë¦¬)
 		auto DrawDepth_Static = [&](StaticMesh& mesh, const std::vector<MaterialGPU>& mtls, const Matrix& world, bool alphaCut)
 			{
-				// b0: ¶óÀÌÆ® View/Proj ·Î ±³Ã¼
+				// b0: ë¼ì´íŠ¸ View/Proj ë¡œ êµì²´
 				ConstantBuffer cbd = cb;
 				cbd.mWorld = XMMatrixTranspose(world);
 				cbd.mWorldInvTranspose = world.Invert();
@@ -195,7 +195,7 @@ void TutorialApp::OnRender()
 
 				ctx->IASetInputLayout(m_pMeshIL);
 				ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-				ctx->VSSetShader(mVS_Depth.Get(), nullptr, 0);    // ±íÀÌ Àü¿ë VS¸¦ µû·Î µÎÁö ¾Ê´Â °æ¿ì
+				ctx->VSSetShader(mVS_Depth.Get(), nullptr, 0);    // ê¹Šì´ ì „ìš© VSë¥¼ ë”°ë¡œ ë‘ì§€ ì•ŠëŠ” ê²½ìš°
 				ctx->PSSetShader(mPS_Depth.Get(), nullptr, 0);
 
 				for (size_t i = 0; i < mesh.Ranges().size(); ++i) {
@@ -207,11 +207,11 @@ void TutorialApp::OnRender()
 
 					UseCB use{};
 					use.useOpacity = isCut ? 1u : 0u;
-					use.alphaCut = isCut ? mShadowAlphaCut : -1.0f; // ÄÆ¾Æ¿ôÀÌ¸é clip() È°¼º
+					use.alphaCut = isCut ? mShadowAlphaCut : -1.0f; // ì»·ì•„ì›ƒì´ë©´ clip() í™œì„±
 					ctx->UpdateSubresource(m_pUseCB, 0, nullptr, &use, 0, 0);
 					ctx->PSSetConstantBuffers(2, 1, &m_pUseCB);
 
-					mat.Bind(ctx);            // opacity ÅØ½ºÃ³¸¦ PS¿¡¼­ clip()¿¡ ÀÌ¿ë
+					mat.Bind(ctx);            // opacity í…ìŠ¤ì²˜ë¥¼ PSì—ì„œ clip()ì— ì´ìš©
 					mesh.DrawSubmesh(ctx, (UINT)i);
 					MaterialGPU::Unbind(ctx);
 				}
@@ -223,30 +223,30 @@ void TutorialApp::OnRender()
 
 		if (mBoxRig && mBoxX.enabled)
 		{
-			// b0: ¶óÀÌÆ® ºä/ÇÁ·ÎÁ§¼ÇÀ¸·Î ¾÷µ¥ÀÌÆ®
+			// b0: ë¼ì´íŠ¸ ë·°/í”„ë¡œì ì…˜ìœ¼ë¡œ ì—…ë°ì´íŠ¸
 			ConstantBuffer cbd = cb;
 			const Matrix W = ComposeSRT(mBoxX);
 			cbd.mWorld = XMMatrixTranspose(W);
-			cbd.mWorldInvTranspose = Matrix::Identity;       // Rigid´Â VS¿¡¼­ ÇÊ¿ä ¾øÀ¸¸é Identity·Î
+			cbd.mWorldInvTranspose = Matrix::Identity;       // RigidëŠ” VSì—ì„œ í•„ìš” ì—†ìœ¼ë©´ Identityë¡œ
 			cbd.mView = XMMatrixTranspose(mLightView);
 			cbd.mProjection = XMMatrixTranspose(mLightProj);
 			ctx->UpdateSubresource(m_pConstantBuffer, 0, nullptr, &cbd, 0, 0);
 			ctx->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 
-			// IL/VS/PS¸¦ depth Àü¿ëÀ¸·Î
+			// IL/VS/PSë¥¼ depth ì „ìš©ìœ¼ë¡œ
 			ctx->IASetInputLayout(mIL_PNTT.Get());
 			ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 			ctx->VSSetShader(mVS_Depth.Get(), nullptr, 0);
 			ctx->PSSetShader(mPS_Depth.Get(), nullptr, 0);
 
-			// ¾ËÆÄ ÄÆ¾Æ¿ô ÀçÁú ´ëÀÀ(ÀÖ´Ù¸é clip)
+			// ì•ŒíŒŒ ì»·ì•„ì›ƒ ìž¬ì§ˆ ëŒ€ì‘(ìžˆë‹¤ë©´ clip)
 			UseCB use{};
-			use.useOpacity = 1u;                  // Rigid ³»ºÎ¿¡¼­ ÀçÁú ºÐ±âÇÑ´Ù¸é ±×´ë·Î µÖµµ OK
-			use.alphaCut = mShadowAlphaCut;     // ImGui¿¡¼­ ¾²´Â °ª
+			use.useOpacity = 1u;                  // Rigid ë‚´ë¶€ì—ì„œ ìž¬ì§ˆ ë¶„ê¸°í•œë‹¤ë©´ ê·¸ëŒ€ë¡œ ë‘¬ë„ OK
+			use.alphaCut = mShadowAlphaCut;     // ImGuiì—ì„œ ì“°ëŠ” ê°’
 			ctx->UpdateSubresource(m_pUseCB, 0, nullptr, &use, 0, 0);
 			ctx->PSSetConstantBuffers(2, 1, &m_pUseCB);
 
-			// RigidSkeletal ±íÀÌ µå·Î¿ì (½Ã±×´ÏÃ³´Â ³× ÇÁ·ÎÁ§Æ®¿¡ ¸ÂÃç)
+			// RigidSkeletal ê¹Šì´ ë“œë¡œìš° (ì‹œê·¸ë‹ˆì²˜ëŠ” ë„¤ í”„ë¡œì íŠ¸ì— ë§žì¶°)
 			mBoxRig->DrawDepthOnly(
 				ctx, W,
 				mLightView, mLightProj,
@@ -259,7 +259,7 @@ void TutorialApp::OnRender()
 			);
 		}
 
-		// ½ºÅ°´× ±íÀÌ
+		// ìŠ¤í‚¤ë‹ ê¹Šì´
 		if (mSkinRig && mSkinX.enabled)
 		{
 			ctx->IASetInputLayout(mIL_PNTT_BW.Get());
@@ -267,10 +267,10 @@ void TutorialApp::OnRender()
 			ctx->VSSetShader(mVS_DepthSkinned.Get(), nullptr, 0);
 			ctx->PSSetShader(mPS_Depth.Get(), nullptr, 0);
 
-			// b0¸¦ ¶óÀÌÆ® VP·Î ¼¼ÆÃ
+			// b0ë¥¼ ë¼ì´íŠ¸ VPë¡œ ì„¸íŒ…
 			ConstantBuffer cbd = cb;
 			cbd.mWorld = XMMatrixTranspose(ComposeSRT(mSkinX));
-			cbd.mWorldInvTranspose = Matrix::Identity; // ½ºÅ°´×¿¡¼­´Â VS¿¡¼­ Ã³¸®ÇÒ ¼ö ÀÖÀ½
+			cbd.mWorldInvTranspose = Matrix::Identity; // ìŠ¤í‚¤ë‹ì—ì„œëŠ” VSì—ì„œ ì²˜ë¦¬í•  ìˆ˜ ìžˆìŒ
 			cbd.mView = XMMatrixTranspose(mLightView);
 			cbd.mProjection = XMMatrixTranspose(mLightProj);
 			ctx->UpdateSubresource(m_pConstantBuffer, 0, nullptr, &cbd, 0, 0);
@@ -280,7 +280,7 @@ void TutorialApp::OnRender()
 				ctx, ComposeSRT(mSkinX),
 				mLightView, mLightProj,
 				m_pConstantBuffer,  // b0
-				m_pUseCB,           // b2 (alphaCut Á¦¾î)
+				m_pUseCB,           // b2 (alphaCut ì œì–´)
 				m_pBoneCB,          // b4
 				mVS_DepthSkinned.Get(),
 				mPS_Depth.Get(),
@@ -289,7 +289,7 @@ void TutorialApp::OnRender()
 			);
 		}
 
-		// ¸ÞÀÎ RT º¹±¸
+		// ë©”ì¸ RT ë³µêµ¬
 		ID3D11RenderTargetView* rtv = m_pRenderTargetView;
 		ctx->OMSetRenderTargets(1, &rtv, m_pDepthStencilView);
 
@@ -303,9 +303,9 @@ void TutorialApp::OnRender()
 	ctx->RSSetState(rsBeforeShadow);
 	SAFE_RELEASE(rsBeforeShadow);
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-	// 4) SKYBOX (¼±ÅÃ)
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	// 4) SKYBOX (ì„ íƒ)
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	if (mDbg.showSky)
 	{
 		ID3D11RasterizerState* oldRS = nullptr; ctx->RSGetState(&oldRS);
@@ -341,7 +341,7 @@ void TutorialApp::OnRender()
 		ctx->OMSetDepthStencilState(oldDSS, oldRef);
 		SAFE_RELEASE(oldRS); SAFE_RELEASE(oldDSS);
 
-		// ¸Þ½¬ ¼Â¾÷ º¹±¸
+		// ë©”ì‰¬ ì…‹ì—… ë³µêµ¬
 		ctx->IASetInputLayout(m_pMeshIL);
 		ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		ctx->VSSetShader(m_pMeshVS, nullptr, 0);
@@ -349,11 +349,11 @@ void TutorialApp::OnRender()
 		if (m_pSamplerLinear) ctx->PSSetSamplers(0, 1, &m_pSamplerLinear);
 	}
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-	// 5) º» ÆÐ½º¿¡¼­ ¼¨µµ¿ì »ùÇÃ ¹ÙÀÎµå (PS: t5/s1/b6)
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	// 5) ë³¸ íŒ¨ìŠ¤ì—ì„œ ì„€ë„ìš° ìƒ˜í”Œ ë°”ì¸ë“œ (PS: t5/s1/b6)
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	{
-		// ¾ÈÀüÇÏ°Ô Àç¹ÙÀÎµå
+		// ì•ˆì „í•˜ê²Œ ìž¬ë°”ì¸ë“œ
 		ctx->UpdateSubresource(mCB_Shadow.Get(), 0, nullptr, &scb, 0, 0);
 		ID3D11Buffer* b6r = mCB_Shadow.Get();
 		ID3D11SamplerState* cmp = mSamShadowCmp.Get();
@@ -365,7 +365,7 @@ void TutorialApp::OnRender()
 
 	// === Toon ramp bind (PS: t6/b7) ===
 	{
-		//Å÷ ¼ÎÀÌµù ¹ÙÀÎµå
+		//íˆ° ì…°ì´ë”© ë°”ì¸ë“œ
 		ToonCB_ t{};
 		t.useToon = mDbg.useToon ? 1u : 0u;
 		t.halfLambert = mDbg.toonHalfLambert ? 1u : 0u;
@@ -383,7 +383,7 @@ void TutorialApp::OnRender()
 	}
 
 
-	// ¹ÙÀÎ´õ
+	// ë°”ì¸ë”
 	auto BindStatic = [&]() {
 		ctx->IASetInputLayout(m_pMeshIL);
 		ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -397,7 +397,7 @@ void TutorialApp::OnRender()
 		ctx->PSSetShader(m_pMeshPS, nullptr, 0);
 		};
 
-	// µå·Î¿ì ÇïÆÛ
+	// ë“œë¡œìš° í—¬í¼
 	auto DrawOpaqueOnly = [&](StaticMesh& mesh, const std::vector<MaterialGPU>& mtls, const Matrix& world)
 		{
 			ConstantBuffer local = cb;
@@ -472,7 +472,7 @@ void TutorialApp::OnRender()
 				use.useNormal = (mat.hasNormal && !mDbg.disableNormal) ? 1u : 0u;
 				use.useSpecular = (!mDbg.disableSpecular) ? (mat.hasSpecular ? 1u : 2u) : 0u;
 				use.useEmissive = (mat.hasEmissive && !mDbg.disableEmissive) ? 1u : 0u;
-				use.useOpacity = 1u;           // Åõ¸í ºí·»µå
+				use.useOpacity = 1u;           // íˆ¬ëª… ë¸”ë Œë“œ
 				use.alphaCut = mDbg.forceAlphaClip ? mDbg.alphaCut : -1.0f;
 				ctx->UpdateSubresource(m_pUseCB, 0, nullptr, &use, 0, 0);
 				ctx->PSSetConstantBuffers(2, 1, &m_pUseCB);
@@ -482,9 +482,9 @@ void TutorialApp::OnRender()
 			}
 		};
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	// 6) OPAQUE
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	{
 		float bf[4] = { 0,0,0,0 };
 		ctx->OMSetBlendState(nullptr, bf, 0xFFFFFFFF);
@@ -513,19 +513,19 @@ void TutorialApp::OnRender()
 				BindStatic();
 			}
 
-			// B) OPAQUE ºí·Ï ¸Ç ³¡ÂÊ¿¡ ºÙ¿©¶ó
+			// B) OPAQUE ë¸”ë¡ ë§¨ ëìª½ì— ë¶™ì—¬ë¼
 			if (mDbg.showGrid) {
 				float bf[4] = { 0,0,0,0 };
 				ctx->OMSetBlendState(nullptr, bf, 0xFFFFFFFF);
 				ctx->OMSetDepthStencilState(m_pDSS_Opaque, 0);
-				ctx->RSSetState(m_pCullBackRS); // À­¸é º¸ÀÌ°Ô ¸¸µç ±× »óÅÂ
+				ctx->RSSetState(m_pCullBackRS); // ìœ—ë©´ ë³´ì´ê²Œ ë§Œë“  ê·¸ ìƒíƒœ
 
 				ConstantBuffer local = {};
 				local.mWorld = XMMatrixTranspose(Matrix::Identity);
 				local.mWorldInvTranspose = Matrix::Identity;
 				local.mView = XMMatrixTranspose(view);
 				local.mProjection = XMMatrixTranspose(m_Projection);
-				local.vLightDir = cb.vLightDir;     // ¡ç Á¶¸í µ¿ÀÏ
+				local.vLightDir = cb.vLightDir;     // â† ì¡°ëª… ë™ì¼
 				local.vLightColor = cb.vLightColor;
 				ctx->UpdateSubresource(m_pConstantBuffer, 0, nullptr, &local, 0, 0);
 				ctx->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
@@ -545,15 +545,15 @@ void TutorialApp::OnRender()
 		}
 	}
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-	// 7) CUTOUT (alpha-test °­Á¦ ¸ðµå)
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	// 7) CUTOUT (alpha-test ê°•ì œ ëª¨ë“œ)
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	if (mDbg.forceAlphaClip) {
 		float bf[4] = { 0,0,0,0 };
 		ctx->OMSetBlendState(nullptr, bf, 0xFFFFFFFF);
 		ctx->OMSetDepthStencilState(m_pDSS_Opaque, 0);
 
-		// RS (wire/cullNone À¯Áö)
+		// RS (wire/cullNone ìœ ì§€)
 		if (mDbg.cullNone && m_pDbgRS) ctx->RSSetState(m_pDbgRS);
 
 		if (mDbg.showTransparent) {
@@ -589,9 +589,9 @@ void TutorialApp::OnRender()
 		}
 	}
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	// 8) TRANSPARENT
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	{
 		ID3D11BlendState* oldBS = nullptr; float oldBF[4]; UINT oldSM = 0xFFFFFFFF;
 		ctx->OMGetBlendState(&oldBS, oldBF, &oldSM);
@@ -631,9 +631,9 @@ void TutorialApp::OnRender()
 		SAFE_RELEASE(oldBS); SAFE_RELEASE(oldDSS);
 	}
 
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-	// 9) µð¹ö±×(±¤¿ø È­»ìÇ¥, ±×¸®µå)
-	// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+	// 9) ë””ë²„ê·¸(ê´‘ì› í™”ì‚´í‘œ, ê·¸ë¦¬ë“œ)
+	// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 	if (mDbg.showLightArrow) {
 		Vector3 D = -dirV; D.Normalize();
 		Matrix worldArrow = Matrix::CreateScale(m_ArrowScale) * Matrix::CreateWorld(m_ArrowPos, D, Vector3::UnitY);
@@ -644,7 +644,7 @@ void TutorialApp::OnRender()
 		ctx->UpdateSubresource(m_pConstantBuffer, 0, nullptr, &local, 0, 0);
 		ctx->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 
-		// »óÅÂ ¹é¾÷
+		// ìƒíƒœ ë°±ì—…
 		ID3D11RasterizerState* oRS = nullptr; ctx->RSGetState(&oRS);
 		ID3D11DepthStencilState* oDSS = nullptr; UINT oRef = 0; ctx->OMGetDepthStencilState(&oDSS, &oRef);
 		ID3D11BlendState* oBS = nullptr; float oBF[4]; UINT oSM = 0xFFFFFFFF; ctx->OMGetBlendState(&oBS, oBF, &oSM);
@@ -675,7 +675,7 @@ void TutorialApp::OnRender()
 
 		ctx->DrawIndexed(indexCount, 0, 0);
 
-		// »óÅÂ º¹±¸
+		// ìƒíƒœ ë³µêµ¬
 		ctx->VSSetShader(oVS, nullptr, 0);
 		ctx->PSSetShader(oPS, nullptr, 0);
 		ctx->IASetInputLayout(oIL);
