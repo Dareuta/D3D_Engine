@@ -1,7 +1,5 @@
 # D3D_Engine
 
-[![](https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
-
 #### add: 추가됨</br>
 #### remove: 삭제됨</br>
 #### refactor: 구조 변경, 리팩터링</br>
@@ -10,6 +8,8 @@
 #### docs: 주석, README, 문서 수정</br>
 #### test: 테스트 코드 추가/수정</br>
 #### chore: 기타 잡다한 일들...</br>
+
+[![](https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
 ```
 소갈비찜 레시피
