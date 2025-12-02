@@ -148,10 +148,14 @@ endlocal
   <ItemGroup>
     <ClCompile Include="AssimpImporterEX.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RigidSkeletal.cpp" />
     <ClCompile Include="SkinnedMesh.cpp" />
+    <ClCompile Include="SkinnedModelResource.cpp" />
     <ClCompile Include="SkinnedSkeletal.cpp" />
     <ClCompile Include="StaticMesh.cpp" />
+    <ClCompile Include="StaticMeshResource.cpp" />
+    <ClCompile Include="Texture2DResource.cpp" />
     <ClCompile Include="TutorialApp_D3DInit.cpp" />
     <ClCompile Include="TutorialApp_ImGui.cpp" />
     <ClCompile Include="TutorialApp_Lifecycle.cpp" />
@@ -164,10 +168,14 @@ endlocal
     <ClInclude Include="Material.h" />
     <ClInclude Include="MeshDataEx.h" />
     <ClInclude Include="RenderSharedCB.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RigidSkeletal.h" />
     <ClInclude Include="SkinnedMesh.h" />
+    <ClInclude Include="SkinnedModelResource.h" />
     <ClInclude Include="SkinnedSkeletal.h" />
     <ClInclude Include="StaticMesh.h" />
+    <ClInclude Include="StaticMeshResource.h" />
+    <ClInclude Include="Texture2DResource.h" />
     <ClInclude Include="TutorialApp.h" />
   </ItemGroup>
   <ItemGroup>

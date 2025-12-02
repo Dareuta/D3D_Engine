@@ -397,7 +397,7 @@ void TutorialApp::RenderDebugPass(
 		SAFE_RELEASE(oVS); SAFE_RELEASE(oPS); SAFE_RELEASE(oIL);
 		SAFE_RELEASE(oBS); SAFE_RELEASE(oDSS); SAFE_RELEASE(oRS);
 	}
-	
+
 	if (mDbg.showGrid) {
 		float bf[4] = { 0,0,0,0 };
 		ctx->OMSetBlendState(nullptr, bf, 0xFFFFFFFF);
@@ -427,20 +427,22 @@ void TutorialApp::RenderDebugPass(
 	//=============================================
 }
 
-void TutorialApp::BindStaticMeshPipeline(ID3D11DeviceContext* ctx)
-{
+void TutorialApp::BindStaticMeshPipeline(ID3D11DeviceContext* ctx) {
+	//=============================================
 	ctx->IASetInputLayout(m_pMeshIL);
 	ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	ctx->VSSetShader(m_pMeshVS, nullptr, 0);
 	ctx->PSSetShader(m_pMeshPS, nullptr, 0);
+	//=============================================
 }
 
-void TutorialApp::BindSkinnedMeshPipeline(ID3D11DeviceContext* ctx)
-{
+void TutorialApp::BindSkinnedMeshPipeline(ID3D11DeviceContext* ctx) {
+	//=============================================
 	ctx->IASetInputLayout(m_pSkinnedIL);
 	ctx->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	ctx->VSSetShader(m_pSkinnedVS, nullptr, 0);
 	ctx->PSSetShader(m_pMeshPS, nullptr, 0);
+	//=============================================
 }
 
 void TutorialApp::DrawStaticOpaqueOnly(
@@ -448,8 +450,8 @@ void TutorialApp::DrawStaticOpaqueOnly(
 	StaticMesh& mesh,
 	const std::vector<MaterialGPU>& mtls,
 	const Matrix& world,
-	const ConstantBuffer& baseCB)
-{
+	const ConstantBuffer& baseCB) {
+	//=============================================
 	ConstantBuffer local = baseCB;
 	local.mWorld = XMMatrixTranspose(world);
 	local.mWorldInvTranspose = world.Invert();
@@ -476,6 +478,7 @@ void TutorialApp::DrawStaticOpaqueOnly(
 		mesh.DrawSubmesh(ctx, (UINT)i);
 		MaterialGPU::Unbind(ctx);
 	}
+	//=============================================
 }
 
 void TutorialApp::DrawStaticAlphaCutOnly(
@@ -483,8 +486,8 @@ void TutorialApp::DrawStaticAlphaCutOnly(
 	StaticMesh& mesh,
 	const std::vector<MaterialGPU>& mtls,
 	const Matrix& world,
-	const ConstantBuffer& baseCB)
-{
+	const ConstantBuffer& baseCB) {
+	//=============================================
 	ConstantBuffer local = baseCB;
 	local.mWorld = XMMatrixTranspose(world);
 	local.mWorldInvTranspose = world.Invert();
@@ -511,6 +514,7 @@ void TutorialApp::DrawStaticAlphaCutOnly(
 		mesh.DrawSubmesh(ctx, (UINT)i);
 		MaterialGPU::Unbind(ctx);
 	}
+	//=============================================
 }
 
 void TutorialApp::DrawStaticTransparentOnly(
@@ -518,8 +522,8 @@ void TutorialApp::DrawStaticTransparentOnly(
 	StaticMesh& mesh,
 	const std::vector<MaterialGPU>& mtls,
 	const Matrix& world,
-	const ConstantBuffer& baseCB)
-{
+	const ConstantBuffer& baseCB) {
+	//=============================================
 	if (mDbg.forceAlphaClip) return;
 
 	ConstantBuffer local = baseCB;
@@ -548,5 +552,6 @@ void TutorialApp::DrawStaticTransparentOnly(
 		mesh.DrawSubmesh(ctx, (UINT)i);
 		MaterialGPU::Unbind(ctx);
 	}
+	//=============================================
 }
 
