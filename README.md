@@ -1,6 +1,7 @@
 # D3D_Engine
 
 #### add: 추가됨</br>
+#### feat: 기능강화</br>
 #### remove: 삭제됨</br>
 #### refactor: 구조 변경, 리팩터링</br>
 #### fix: 버그 수정</br>
